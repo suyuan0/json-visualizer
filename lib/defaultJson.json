@@ -1,0 +1,22 @@
+{
+  "id": 1,
+  "name": "John Doe",
+  "isActive": true,
+  "scores": [
+    87,
+    92,
+    76,
+    85
+  ],
+  "address": {
+    "street": "1234 Elm St",
+    "city": "Anytown",
+    "state": "CA",
+    "postalCode": "90210"
+  },
+  "contact": {
+    "email": "john.doe@example.com",
+    "phone": "555-1234"
+  },
+  "registration_date": "2024-11-15T08:00:00Z"
+}
