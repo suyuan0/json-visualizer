@@ -1,27 +1,17 @@
-import jsonViewTree from "@/utils/jsonViewTree";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import panzoom from "panzoom";
+import clsx from "clsx";
+
+import { useJsonGraph } from "@/lib/useJsonGraph";
 
 interface Props {
   value: string;
 }
 
 export default function JsonView({ value }: Props) {
-  const [svgContent, setSvgContent] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const svgRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    try {
-      const json = JSON.parse(value);
-      const content = jsonViewTree(json);
-      setSvgContent(content);
-      setError(null);
-    } catch (err) {
-      console.error(err);
-      setError("Invalid JSON input.");
-    }
-  }, [value]);
+  const { nodes, edges } = useJsonGraph(value);
 
   useEffect(() => {
     // 使用 Panzoom 初始化缩放和平移
@@ -30,7 +20,7 @@ export default function JsonView({ value }: Props) {
       const instance = panzoom(element, {
         zoomSpeed: 0.1, // 缩放速度
         maxZoom: 5, // 最大缩放倍数
-        minZoom: 0.5, // 最小缩放倍数
+        minZoom: 0.5 // 最小缩放倍数
       });
 
       return () => {
@@ -41,17 +31,55 @@ export default function JsonView({ value }: Props) {
 
   return (
     <div className="text-black">
-      {error ? (
-        <div className="text-red-500">{error}</div>
-      ) : (
-        <div ref={svgRef} style={{ border: "1px solid black", overflow: "hidden", width: "100%", height: "600px" }}>
-          <svg width="100%" height="100%">
-            <foreignObject width="100%" height="100%">
-              <div dangerouslySetInnerHTML={{ __html: svgContent }} />
-            </foreignObject>
+      <div ref={svgRef} style={{ border: "1px solid black", overflow: "hidden", width: "100%", height: "600px" }}>
+        <div className="h-full w-full">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="end-arrow" viewBox="0 -4 8 8" markerWidth={8} markerHeight={8} orient="auto">
+                <path transform="translate(0, 0) rotate(0)" d="M0, -4 L 8 0 L 0 4" fill="#485a74" />
+              </marker>
+            </defs>
+
+            {edges.map((edge, index) => (
+              <path key={index} d={edge} fill="none" stroke="#485a74" strokeWidth={1} markerEnd="url(#end-arrow)" />
+            ))}
+
+            {nodes.map(nodeItem => {
+              return (
+                <g key={nodeItem.id} transform={`translate(${nodeItem.x}, ${nodeItem.y})`}>
+                  <rect
+                    width={nodeItem.width}
+                    height={nodeItem.height}
+                    fill="#2b2c3e"
+                    stroke="#475872"
+                    strokeWidth={1}
+                    rx={4}
+                    ry={4}
+                  />
+                  <foreignObject width={nodeItem.width} height={nodeItem.height}>
+                    <ul
+                      className={clsx(
+                        "cursor-pointer select-none h-full px-2 text-sm flex flex-col justify-center",
+                        "border-[1px] border-[#475872] rounded hover:border-pink-400 duration-500"
+                      )}
+                    >
+                      {nodeItem.content.map((contItem, contIndex) => (
+                        <li key={contIndex}>
+                          <span className="text-[#59b8ff]">
+                            {contItem.key}
+                            {contItem.key ? ": " : ""}
+                          </span>
+                          <span style={{ color: contItem.color }}>{contItem.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </foreignObject>
+                </g>
+              );
+            })}
           </svg>
         </div>
-      )}
+      </div>
     </div>
   );
 }
