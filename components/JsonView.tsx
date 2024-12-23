@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import panzoom from "panzoom";
 import clsx from "clsx";
 
-import { useJsonGraph } from "@/lib/useJsonGraph";
+import { useJsonGraph } from "@/hooks/useJsonGraph";
+import useTheme from "@/hooks/useTheme";
 
 interface Props {
   value: string;
@@ -12,6 +13,7 @@ export default function JsonView({ value }: Props) {
   const svgRef = useRef<HTMLDivElement>(null);
 
   const { nodes, edges } = useJsonGraph(value);
+  const { theme } = useTheme();
 
   useEffect(() => {
     // 使用 Panzoom 初始化缩放和平移
@@ -29,9 +31,12 @@ export default function JsonView({ value }: Props) {
     }
   }, []);
 
+  // const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  // console.log(isDarkMode);
+
   return (
     <div className="text-black">
-      <div ref={svgRef} style={{ border: "1px solid black", overflow: "hidden", width: "100%", height: "600px" }}>
+      <div ref={svgRef} style={{ overflow: "hidden", width: "100%", height: "600px" }}>
         <div className="h-full w-full">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -50,11 +55,12 @@ export default function JsonView({ value }: Props) {
                   <rect
                     width={nodeItem.width}
                     height={nodeItem.height}
-                    fill="#2b2c3e"
-                    stroke="#475872"
+                    // fill="#2b2c3e"
+                    // stroke="#475872"
                     strokeWidth={1}
                     rx={4}
                     ry={4}
+                    className="fill-[#F6F8FA] dark:fill-[#2b2c3e]"
                   />
                   <foreignObject width={nodeItem.width} height={nodeItem.height}>
                     <ul
@@ -65,11 +71,14 @@ export default function JsonView({ value }: Props) {
                     >
                       {nodeItem.content.map((contItem, contIndex) => (
                         <li key={contIndex}>
-                          <span className="text-[#59b8ff]">
+                          <span className="text-[#761cea] dark:text-[#59b8ff]">
                             {contItem.key}
                             {contItem.key ? ": " : ""}
                           </span>
-                          <span style={{ color: contItem.color }}>{contItem.value}</span>
+                          {/* <span style={{ color: contItem.color }}>{contItem.value}</span> */}
+                          <span style={{ color: theme === "dark" ? contItem.color.dark : contItem.color.light }}>
+                            {contItem.value}
+                          </span>
                         </li>
                       ))}
                     </ul>

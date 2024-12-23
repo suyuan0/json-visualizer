@@ -1,6 +1,6 @@
 type JsonValue = { [key: string]: any } | any[];
 type ParentPosition = { x: number; y: number; width: number; height: number } | null;
-type Content = { key: string; value: string; color: string }[];
+type Content = { key: string; value: string; color: { dark: string; light: string } }[];
 type NodeData = {
   id: string;
   x: number;
@@ -24,6 +24,7 @@ export function useJsonGraph(value: string) {
   let maxY = 0;
   const occupiedPositions: [x: number, y: number, w: number, h: number][] = [];
   const jsonValue: JsonValue = JSON.parse(value);
+  const defaultColor = { dark: "#dce5e7", light: "#6c7a8b" };
 
   function adjustPosition(x: number, y: number, width: number, height: number): number {
     let adjustedY = y;
@@ -49,17 +50,18 @@ export function useJsonGraph(value: string) {
 
   function calculateValueColor(value: string) {
     const valueTypeColor = {
-      string: "#dce5e7",
-      boolean: "#00dc7d",
-      number: "#e8c479",
-      object: "#f5a623"
+      string: defaultColor,
+      boolean: { dark: "#1abc9c", light: "#00dc7d" },
+      number: { dark: "#f1c40f", light: "#e8c479" },
+      object: { dark: "#e74c3c", light: "#f5a623" },
+      array: { dark: "#e0f7fa", light: "#dce5e7" }
     };
+
     try {
       const valueType = typeof JSON.parse(value);
-
       return valueTypeColor[valueType as keyof typeof valueTypeColor];
     } catch {
-      return "#dce5e7";
+      return defaultColor;
     }
   }
 
@@ -71,10 +73,10 @@ export function useJsonGraph(value: string) {
     const lines: Content = [];
 
     if (Array.isArray(jsonValue)) {
-      lines.push({ key: "Array", value: "Array", color: "#dce5e7" });
+      lines.push({ key: "Array", value: "Array", color: defaultColor });
     } else if (typeof jsonValue === "object" && jsonValue !== null) {
       if (Object.keys(jsonValue).length === 0) {
-        lines.push({ key: "", value: "{}", color: "#dce5e7" });
+        lines.push({ key: "", value: "{}", color: defaultColor });
       } else {
         for (const [key, value] of Object.entries(jsonValue)) {
           const displayValue = Array.isArray(value)
@@ -86,7 +88,7 @@ export function useJsonGraph(value: string) {
         }
       }
     } else {
-      lines.push({ key: "", value: JSON.stringify(jsonValue), color: "#dce5e7" });
+      lines.push({ key: "", value: JSON.stringify(jsonValue), color: defaultColor });
     }
 
     const maxWidth = Math.max(...lines.map(line => measureTextWidth(`${line.key}: ${line.value}`), 0));
