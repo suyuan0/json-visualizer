@@ -1,6 +1,7 @@
 "use client";
 
 import MonacoEditor, { type EditorProps } from "@monaco-editor/react";
+import useTheme from "@/hooks/useTheme";
 
 interface Props {
   value: string;
@@ -19,6 +20,13 @@ const editorOptions: EditorProps["options"] = {
 };
 
 export default function JsonEditor({ value, setValueAction }: Props) {
+  const { theme } = useTheme();
+
+  const themeMap = {
+    dark: "vs-dark",
+    light: "light"
+  };
+
   const handleChange = (newValue: string | undefined) => {
     if (newValue !== undefined) {
       try {
@@ -35,7 +43,7 @@ export default function JsonEditor({ value, setValueAction }: Props) {
     <MonacoEditor
       height="100%"
       language="json"
-      theme="vs-dark"
+      theme={themeMap[theme]}
       defaultValue={value}
       options={editorOptions}
       onChange={handleChange}
