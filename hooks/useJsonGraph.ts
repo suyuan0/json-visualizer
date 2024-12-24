@@ -237,6 +237,8 @@ export function useJsonGraph(value: string) {
   generateNodes(jsonValue, 50, 50);
   return {
     nodes,
-    edges
+    edges,
+    maxX,
+    maxY
   };
 }

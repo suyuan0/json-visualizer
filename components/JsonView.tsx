@@ -12,7 +12,7 @@ interface Props {
 export default function JsonView({ value }: Props) {
   const svgRef = useRef<HTMLDivElement>(null);
 
-  const { nodes, edges } = useJsonGraph(value);
+  const { nodes, edges, maxX, maxY } = useJsonGraph(value);
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -36,9 +36,14 @@ export default function JsonView({ value }: Props) {
 
   return (
     <div className="text-black">
-      <div ref={svgRef} style={{ overflow: "hidden", width: "100%", height: "600px" }}>
+      <div ref={svgRef} style={{ width: "100%", height: "600px" }}>
         <div className="h-full w-full">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width={maxX + 150}
+            height={maxY + 150}
+            viewBox={`0 0 ${maxX + 150} ${maxY + 150}`}
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <defs>
               <marker id="end-arrow" viewBox="0 -4 8 8" markerWidth={8} markerHeight={8} orient="auto">
                 <path transform="translate(0, 0) rotate(0)" d="M0, -4 L 8 0 L 0 4" fill="#485a74" />

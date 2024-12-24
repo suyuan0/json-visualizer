@@ -2,12 +2,7 @@
   "id": 1,
   "name": "John Doe",
   "isActive": true,
-  "scores": [
-    87,
-    92,
-    76,
-    85
-  ],
+  "scores": [87, 92, 76, 85],
   "address": {
     "street": "1234 Elm St",
     "city": "Anytown",
