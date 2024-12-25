@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, Fragment, useEffect } from "react";
-import { usePathname, useParams, useRouter, useSelectedLayoutSegments } from "next/navigation";
+import { useState } from "react";
+import { useParams, useRouter, useSelectedLayoutSegments } from "next/navigation";
 import { locales } from "@/config";
 import {
   DropdownMenu,

@@ -8,7 +8,7 @@ export default async function Home({ params }: ServerComParams) {
   const { t } = await translation(lng);
   return (
     <div>
-      <LanguageChange lng={lng} />
+      <LanguageChange />
       <Link href={`${lng}/editor`}>{t("welcome")}</Link>
     </div>
   );
