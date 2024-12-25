@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import { useState, use, Usable } from "react";
+import { useState, use } from "react";
 import defaultJson from "@/lib/defaultJson.json";
 import GridBackground from "@/components/GridBackground";
 import JsonEditorHeader from "@/components/JsonEditorHeader";

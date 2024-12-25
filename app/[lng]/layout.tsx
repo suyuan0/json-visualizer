@@ -16,7 +16,7 @@ const roboto = Roboto({
 //   description: "json visualizer"
 // };
 
-export async function generateMetadata({ params }: ServerParams): Promise<Metadata> {
+export async function generateMetadata({ params }: ServerComParams): Promise<Metadata> {
   const { lng } = await params;
   const { t } = await translation(lng);
 
@@ -35,9 +35,7 @@ export default async function RootLayout({
   params
 }: Readonly<{
   children: React.ReactNode;
-  params: {
-    lng: string;
-  };
+  params: Promise<any>;
 }>) {
   const { lng } = await params;
   return (

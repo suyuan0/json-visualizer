@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { translation } from "@/app/i18n";
 
-export async function generateMetadata({ params }: ServerParams): Promise<Metadata> {
+export async function generateMetadata({ params }: ServerComParams): Promise<Metadata> {
   const { lng } = await params;
   const { t } = await translation(lng, "editor");
 

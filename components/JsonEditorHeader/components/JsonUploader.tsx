@@ -43,7 +43,7 @@ export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploade
         setIsUploading(false);
       }
     },
-    [onUpload]
+    [onUpload, t]
   );
 
   const onDrop = useCallback(
