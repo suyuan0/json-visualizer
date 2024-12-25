@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
+import { useTranslation } from "@/app/i18n/client";
 
 function isValidUrl(url: string) {
   try {
@@ -18,13 +19,15 @@ function isValidUrl(url: string) {
 interface JsonUploaderProps {
   onUpload: (file: File) => Promise<void>;
   onJsonFetch: (data: any) => void;
+  lng: string;
 }
 
-export default function JsonUploader({ onUpload, onJsonFetch }: JsonUploaderProps) {
+export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploaderProps) {
   const [url, setUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useTranslation(lng, "editor");
 
   const handleUpload = useCallback(
     async (fileOrUrl: File) => {
@@ -35,7 +38,7 @@ export default function JsonUploader({ onUpload, onJsonFetch }: JsonUploaderProp
         await onUpload(fileOrUrl);
       } catch (error) {
         console.error("Upload failed:", error);
-        setError("Upload failed. Please try again.");
+        setError(t("header.uploader.error.1"));
       } finally {
         setIsUploading(false);
       }
@@ -56,7 +59,7 @@ export default function JsonUploader({ onUpload, onJsonFetch }: JsonUploaderProp
 
   const handleFetchJson = async () => {
     if (!isValidUrl(url)) {
-      setError("Please enter a valid URL");
+      setError(t("header.uploader.error.2"));
       return;
     }
     setIsFetching(true);
@@ -71,7 +74,7 @@ export default function JsonUploader({ onUpload, onJsonFetch }: JsonUploaderProp
       onJsonFetch(data);
     } catch (error) {
       console.error("Fetch failed:", error);
-      setError("Failed to fetch JSON data. Please check the URL and try again.");
+      setError(t("header.uploader.error.3"));
     } finally {
       setIsFetching(false);
     }
@@ -83,7 +86,7 @@ export default function JsonUploader({ onUpload, onJsonFetch }: JsonUploaderProp
         <div className="flex space-x-2">
           <Input
             type="text"
-            placeholder="Enter URL for JSON data"
+            placeholder={t("header.uploader.placeholder")}
             value={url}
             onChange={e => {
               setUrl(e.target.value);
@@ -111,7 +114,7 @@ export default function JsonUploader({ onUpload, onJsonFetch }: JsonUploaderProp
         ) : (
           <FolderUpIcon className="mx-auto h-12 w-12 text-gray-400" />
         )}
-        <p className="mt-2 text-sm text-gray-600">Drag & drop a file here, or click to select a JSON file</p>
+        <p className="mt-2 text-sm text-gray-600">{t("header.uploader.fileUpload")}</p>
       </div>
     </div>
   );

@@ -3,9 +3,10 @@ import { uploadFile } from "@/actions/uploadJson";
 
 interface JsonEditorHeaderProps {
   setJsonValue: (value: any) => void;
+  lng: string;
 }
 
-export default function JsonEditorHeader({ setJsonValue }: JsonEditorHeaderProps) {
+export default function JsonEditorHeader({ setJsonValue, lng }: JsonEditorHeaderProps) {
   async function handleUpload(file: File) {
     console.log(uploadFile, file);
 
@@ -28,7 +29,7 @@ export default function JsonEditorHeader({ setJsonValue }: JsonEditorHeaderProps
 
   return (
     <header className="h-10 bg-[#f9f9f9] dark:bg-[#1e1e2e] border-b-[1px] border-[#cccccc] dark:border-[#44475a] px-4 flex items-center">
-      <JsonUploadDialog onUpload={handleUpload} onJsonFetch={handleJsonFetch} />
+      <JsonUploadDialog lng={lng} onUpload={handleUpload} onJsonFetch={handleJsonFetch} />
     </header>
   );
 }

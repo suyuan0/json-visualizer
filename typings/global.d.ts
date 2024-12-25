@@ -22,9 +22,20 @@ interface EdgeData {
 
 type LayoutDirection = "LEFT" | "RIGHT" | "DOWN" | "UP";
 
+interface ServerParams {
+  params: {
+    lng: string;
+  };
+}
+
 /**
  * 组件共用 props 类型
  */
-interface BaseProps {
+interface BaseProps extends Partial<ServerParams> {
   children: React.ReactNode;
+}
+
+interface ClientProps<T = any> {
+  params: Usable<T>;
+  searchParams: any;
 }

@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "title": "JSON visualizer - editor",
+    "description": "json visualizer editor, edit your json data here and visualize it in real time"
+  },
+  "header": {
+    "tooltip": {
+      "upload": "Upload"
+    },
+    "uploader": {
+      "title": "Upload File or Fetch JSON",
+      "description": "Upload a file from your device or fetch JSON data from a URL.",
+      "error": {
+        "1": "Upload failed. Please try again.",
+        "2": "Please enter a valid URL",
+        "3": "Failed to fetch JSON data. Please check the URL and try again."
+      },
+      "placeholder": "Enter URL for JSON data",
+      "fileUpload": "Drag & drop a file here, or click to select a JSON file"
+    }
+  }
+}

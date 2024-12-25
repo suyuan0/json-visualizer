@@ -4,14 +4,17 @@ import { useState } from "react";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import JsonUploader from "./JsonUploader";
+import { useTranslation } from "@/app/i18n/client";
 
 interface JsonUploadDialogProps {
   onUpload: (file: File) => Promise<void>;
   onJsonFetch: (data: any) => void;
+  lng: string;
 }
 
-export default function JsonEditorUpload({ onUpload, onJsonFetch }: JsonUploadDialogProps) {
+export default function JsonEditorUpload({ onUpload, onJsonFetch, lng }: JsonUploadDialogProps) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation(lng, "editor");
 
   const handleUpload = async (file: File) => {
     await onUpload(file);
@@ -26,27 +29,27 @@ export default function JsonEditorUpload({ onUpload, onJsonFetch }: JsonUploadDi
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="flex items-center">
-        <UploadTooltip />
+        <UploadTooltip tooltipContent={t("header.tooltip.upload")} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Upload File or Fetch JSON</DialogTitle>
-          <DialogDescription> Upload a file from your device or fetch JSON data from a URL.</DialogDescription>
+          <DialogTitle>{t("header.uploader.title")}</DialogTitle>
+          <DialogDescription>{t("header.uploader.description")}</DialogDescription>
         </DialogHeader>
-        <JsonUploader onUpload={handleUpload} onJsonFetch={handleJsonFetch} />
+        <JsonUploader lng={lng} onUpload={handleUpload} onJsonFetch={handleJsonFetch} />
       </DialogContent>
     </Dialog>
   );
 }
 
-function UploadTooltip() {
+function UploadTooltip({ tooltipContent }: { tooltipContent: string }) {
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
           <UploadIcon className="cursor-pointer" />
         </TooltipTrigger>
-        <TooltipContent>Upload</TooltipContent>
+        <TooltipContent>{tooltipContent}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

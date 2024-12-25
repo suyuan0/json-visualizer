@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "title": "JSON可视化 - 编辑器",
+    "description": "Json可视化编辑器，在这里编辑您的Json数据并实时可视化"
+  },
+  "header": {
+    "tooltip": {
+      "upload": "上传"
+    },
+    "uploader": {
+      "title": "上传文件或获取 JSON 数据",
+      "description": "从您的设备上传文件或通过 URL 获取 JSON 数据。",
+      "error": {
+        "1": "上传失败，请重试。",
+        "2": "请输入有效的 URL。",
+        "3": "获取 JSON 数据失败，请检查 URL 并重试。"
+      },
+      "placeholder": "输入 JSON 数据的 URL",
+      "fileUpload": "拖放文件到此处，或点击以选择 JSON 文件。"
+    }
+  }
+}

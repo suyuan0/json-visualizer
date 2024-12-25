@@ -1,0 +1,8 @@
+{
+  "welcome": "hello",
+  "languageSwitcher": "Switch from <1>en-US</1> to: ",
+  "metadata": {
+    "title": "JSON visualizer",
+    "description": "JSON visualizer"
+  }
+}
