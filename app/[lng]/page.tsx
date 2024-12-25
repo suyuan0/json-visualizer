@@ -9,7 +9,7 @@ export default async function Home({ params }: ServerComParams) {
   return (
     <div>
       <LanguageChange lng={lng} />
-      <Link href="/editor">{t("welcome")}</Link>
+      <Link href={`${lng}/editor`}>{t("welcome")}</Link>
     </div>
   );
 }

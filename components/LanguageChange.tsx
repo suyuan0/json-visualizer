@@ -1,30 +1,46 @@
-import Link from "next/link";
+"use client";
 
-import { Trans } from "react-i18next/TransWithoutContext";
+import { useState, useRef, Fragment, useEffect } from "react";
+import { usePathname, useParams, useRouter, useSelectedLayoutSegments } from "next/navigation";
 import { locales } from "@/config";
-import { translation } from "@/app/i18n";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
 
-interface LanguageChangeProps {
-  lng: string;
-}
+export default function LanguageChange() {
+  const urlSegments = useSelectedLayoutSegments();
+  const router = useRouter();
+  const params = useParams();
+  const [locale] = useState(params?.lng);
 
-export default async function LanguageChange({ lng }: LanguageChangeProps) {
-  const { t } = await translation(lng);
+  const handleLocaleChange = (newLocale: string) => {
+    const newUrl = `/${newLocale}/${urlSegments.join("/")}`;
+    return newUrl;
+  };
+
+  const handleLinkClick = (newLocale: string) => {
+    const resolvedUrl = handleLocaleChange(newLocale);
+    router.push(resolvedUrl);
+  };
+
   return (
-    <div>
-      <Trans i18nKey="languageSwitcher" t={t}>
-        Switch from <strong>{lng}</strong> to:{" "}
-      </Trans>
-      {locales
-        .filter(l => lng !== l)
-        .map((l, index) => {
-          return (
-            <span key={l}>
-              {index > 0 && " | "}
-              <Link href={`/${l}`}>{l}</Link>
-            </span>
-          );
-        })}
+    <div className="relative inline-block text-left mr-5">
+      <DropdownMenu>
+        <DropdownMenuTrigger>{(locale as string).split("-")[0]}</DropdownMenuTrigger>
+        <DropdownMenuContent className="min-w-0 w-auto">
+          <DropdownMenuGroup>
+            {locales.map(v => (
+              <DropdownMenuItem key={v} onClick={() => handleLinkClick(v)}>
+                {v.split("-")[0]}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import JsonUploadDialog from "./components/JsonUploadDialog";
 import { uploadFile } from "@/actions/uploadJson";
+import LanguageChange from "../LanguageChange";
 
 interface JsonEditorHeaderProps {
   setJsonValue: (value: any) => void;
@@ -28,8 +29,9 @@ export default function JsonEditorHeader({ setJsonValue, lng }: JsonEditorHeader
   }
 
   return (
-    <header className="h-10 bg-[#f9f9f9] dark:bg-[#1e1e2e] border-b-[1px] border-[#cccccc] dark:border-[#44475a] px-4 flex items-center">
+    <header className="h-10 bg-[#f9f9f9] dark:bg-[#1e1e2e] border-b-[1px] border-[#cccccc] dark:border-[#44475a] px-4 flex items-center space-x-10">
       <JsonUploadDialog lng={lng} onUpload={handleUpload} onJsonFetch={handleJsonFetch} />
+      <LanguageChange />
     </header>
   );
 }
