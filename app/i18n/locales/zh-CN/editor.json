@@ -16,7 +16,22 @@
         "3": "获取 JSON 数据失败，请检查 URL 并重试。"
       },
       "placeholder": "输入 JSON 数据的 URL",
-      "fileUpload": "拖放文件到此处，或点击以选择 JSON 文件。"
+      "fileUpload": "拖放文件到此处，或点击以选择 JSON 文件。",
+      "tips": "仅支持 JSON 类型的文件 文件大小不得超过5MB",
+      "toast": {
+        "uploadError": {
+          "title": "上传错误",
+          "description": "仅支持 JSON 类型的文件"
+        },
+        "fileTooLarge": {
+          "title": "文件过大",
+          "description": "文件大小不得超过5MB"
+        },
+        "jsonParseError": {
+          "title": "解析错误",
+          "description": "请检查您的 JSON 文件"
+        }
+      }
     },
     "download": "下载"
   }

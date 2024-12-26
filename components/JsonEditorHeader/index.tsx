@@ -1,5 +1,5 @@
 import JsonUploadDialog from "./components/JsonUploadDialog";
-import { uploadFile } from "@/actions/uploadJson";
+// import { uploadFile } from "@/actions/uploadJson";
 import LanguageChange from "../LanguageChange";
 import JsonDownload from "./components/JsonDownload";
 
@@ -10,9 +10,8 @@ interface JsonEditorHeaderProps {
 }
 
 export default function JsonEditorHeader({ setJsonValue, jsonValue, lng }: JsonEditorHeaderProps) {
-  async function handleUpload(file: File) {
-    console.log(uploadFile, file);
-
+  function handleUpload(jsonValue: string) {
+    setJsonValue(jsonValue);
     // const formData = new FormData();
     // formData.append("file", file);
     // const result = await uploadFile(formData);
@@ -31,7 +30,7 @@ export default function JsonEditorHeader({ setJsonValue, jsonValue, lng }: JsonE
   }
 
   return (
-    <header className="h-10 bg-[#f9f9f9] dark:bg-[#1e1e2e] border-b-[1px] border-[#cccccc] dark:border-[#44475a] px-4 flex items-center space-x-10">
+    <header className="h-10 bg-[#f9f9f9] dark:bg-[#1e1e2e] border-b-[1px] border-[#cccccc] dark:border-[#44475a] px-4 flex items-center space-x-4">
       <JsonUploadDialog lng={lng} onUpload={handleUpload} onJsonFetch={handleJsonFetch} />
       <JsonDownload lng={lng} jsonValue={jsonValue} />
       <LanguageChange />

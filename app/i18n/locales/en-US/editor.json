@@ -16,7 +16,22 @@
         "3": "Failed to fetch JSON data. Please check the URL and try again."
       },
       "placeholder": "Enter URL for JSON data",
-      "fileUpload": "Drag & drop a file here, or click to select a JSON file"
+      "fileUpload": "Drag & drop a file here, or click to select a JSON file",
+      "tips": "Only JSON file types are supported. File size must not exceed 5MB.",
+      "toast": {
+        "uploadError": {
+          "title": "Upload Error",
+          "description": "Only JSON file types are supported."
+        },
+        "fileTooLarge": {
+          "title": "File Too Large",
+          "description": "File size must not exceed 5MB."
+        },
+        "jsonParseError": {
+          "title": "parsing error",
+          "description": "Please check your JSON file."
+        }
+      }
     },
     "download": "download"
   }

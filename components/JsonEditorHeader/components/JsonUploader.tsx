@@ -6,6 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { useTranslation } from "@/app/i18n/client";
+import { UploadFileType } from "@/enum";
+import { toast } from "@/hooks/use-toast";
+import { maxFileSize } from "@/config";
 
 function isValidUrl(url: string) {
   try {
@@ -22,6 +25,8 @@ interface JsonUploaderProps {
   lng: string;
 }
 
+const fileTypes: UploadFileType[] = [UploadFileType.JSON];
+
 export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploaderProps) {
   const [url, setUrl] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -30,12 +35,31 @@ export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploade
   const { t } = useTranslation(lng, "editor");
 
   const handleUpload = useCallback(
-    async (fileOrUrl: File) => {
+    async (file: File) => {
+      if (!(fileTypes as string[]).includes(file.type)) {
+        toast({
+          title: t("header.uploader.toast.uploadError.title"),
+          description: t("header.uploader.toast.uploadError.description"),
+          variant: "destructive"
+        });
+        return;
+      }
+
+      if (file.size > maxFileSize) {
+        toast({
+          title: t("header.uploader.toast.fileTooLarge.title"),
+          description: t("header.uploader.toast.fileTooLarge.description"),
+          variant: "destructive"
+        });
+        return;
+      }
+
       setIsUploading(true);
       setError(null);
 
       try {
-        await onUpload(fileOrUrl);
+        // console.log(UploadFileType, fileTypes);
+        await onUpload(file);
       } catch (error) {
         console.error("Upload failed:", error);
         setError(t("header.uploader.error.1"));
@@ -108,6 +132,7 @@ export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploade
         )}
       >
         <input {...getInputProps()} />
+        {/* <input {...getInputProps()} accept={fileTypes.join(",")} /> */}
 
         {isUploading ? (
           <LoaderIcon className="mx-auto h-12 w-12 text-gray-400 animate-spin" />
@@ -115,6 +140,7 @@ export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploade
           <FolderUpIcon className="mx-auto h-12 w-12 text-gray-400" />
         )}
         <p className="mt-2 text-sm text-gray-600">{t("header.uploader.fileUpload")}</p>
+        <p className="mt-2 text-sm text-gray-600">{t("header.uploader.tips")}</p>
       </div>
     </div>
   );

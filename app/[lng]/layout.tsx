@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { locales } from "@/config";
 import { translation } from "@/app/i18n";
+import { Toaster } from "@/components/ui/toaster";
 
 const roboto = Roboto({
   weight: "400",
@@ -43,6 +44,7 @@ export default async function RootLayout({
       <body className={`antialiased ${roboto.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
