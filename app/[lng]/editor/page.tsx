@@ -25,7 +25,7 @@ const Editor = ({ params }: ClientProps<EditorPropsParams>) => {
 
   return (
     <div className="flex flex-col h-screen">
-      <JsonEditorHeader setJsonValue={setValue} lng={lng} />
+      <JsonEditorHeader setJsonValue={setValue} jsonValue={value} lng={lng} />
       <main className="flex-1 flex">
         <div className="w-96">
           <JsonEditor value={value} setValueAction={setValue} />

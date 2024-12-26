@@ -17,6 +17,7 @@
       },
       "placeholder": "Enter URL for JSON data",
       "fileUpload": "Drag & drop a file here, or click to select a JSON file"
-    }
+    },
+    "download": "download"
   }
 }

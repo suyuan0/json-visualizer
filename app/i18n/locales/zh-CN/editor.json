@@ -17,6 +17,7 @@
       },
       "placeholder": "输入 JSON 数据的 URL",
       "fileUpload": "拖放文件到此处，或点击以选择 JSON 文件。"
-    }
+    },
+    "download": "下载"
   }
 }
