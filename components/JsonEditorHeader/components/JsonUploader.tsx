@@ -58,7 +58,6 @@ export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploade
       setError(null);
 
       try {
-        // console.log(UploadFileType, fileTypes);
         await onUpload(file);
       } catch (error) {
         console.error("Upload failed:", error);
@@ -131,8 +130,7 @@ export default function JsonUploader({ onUpload, onJsonFetch, lng }: JsonUploade
           isDragActive ? "border-primary bg-primary/10" : "border-gray-300"
         )}
       >
-        <input {...getInputProps()} />
-        {/* <input {...getInputProps()} accept={fileTypes.join(",")} /> */}
+        <input {...getInputProps()} accept={fileTypes.join(",")} />
 
         {isUploading ? (
           <LoaderIcon className="mx-auto h-12 w-12 text-gray-400 animate-spin" />

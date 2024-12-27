@@ -2,17 +2,18 @@ import { DownloadIcon } from "lucide-react";
 
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { useTranslation } from "@/app/i18n/client";
+import { useJson } from "@/store/useJson";
 
 interface JsonDownloadProps {
   lng: string;
-  jsonValue: string;
 }
 
-export default function JsonDownload({ lng, jsonValue }: JsonDownloadProps) {
+export default function JsonDownload({ lng }: JsonDownloadProps) {
   const { t } = useTranslation(lng, "editor");
+  const { content } = useJson();
 
   const handleDownload = () => {
-    const blob = new Blob([jsonValue], { type: "application/json" });
+    const blob = new Blob([content], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;

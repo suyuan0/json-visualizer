@@ -2,8 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import { useState, use } from "react";
-import defaultJson from "@/lib/defaultJson.json";
+import { use } from "react";
 import GridBackground from "@/components/GridBackground";
 import JsonEditorHeader from "@/components/JsonEditorHeader";
 
@@ -20,18 +19,17 @@ const JsonEditor = dynamic(() => import("@/components/JsonEditor"), {
 });
 
 const Editor = ({ params }: ClientProps<EditorPropsParams>) => {
-  const [value, setValue] = useState(JSON.stringify(defaultJson, null, 2));
   const { lng } = use<EditorPropsParams>(params);
 
   return (
     <div className="flex flex-col h-screen">
-      <JsonEditorHeader setJsonValue={setValue} jsonValue={value} lng={lng} />
+      <JsonEditorHeader lng={lng} />
       <main className="flex-1 flex">
         <div className="w-96">
-          <JsonEditor value={value} setValueAction={setValue} />
+          <JsonEditor />
         </div>
         <GridBackground className="flex-1 overflow-hidden">
-          <JsonView value={value} />
+          <JsonView />
         </GridBackground>
       </main>
     </div>
