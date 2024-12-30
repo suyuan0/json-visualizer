@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { locales } from "@/config";
 import { translation } from "@/app/i18n";
 import { Toaster } from "@/components/ui/toaster";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const roboto = Roboto({
   weight: "400",
@@ -41,6 +42,9 @@ export default async function RootLayout({
   const { lng } = await params;
   return (
     <html lang={lng} suppressHydrationWarning>
+      <head>
+        <GoogleAnalytics />
+      </head>
       <body className={`antialiased ${roboto.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
