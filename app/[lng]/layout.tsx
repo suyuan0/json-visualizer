@@ -6,6 +6,7 @@ import { locales } from "@/config";
 import { translation } from "@/app/i18n";
 import { Toaster } from "@/components/ui/toaster";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { MantineProvider } from "@mantine/core";
 
 const roboto = Roboto({
   weight: "400",
@@ -46,10 +47,12 @@ export default async function RootLayout({
         <GoogleAnalytics />
       </head>
       <body className={`antialiased ${roboto.className}`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <MantineProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </MantineProvider>
       </body>
     </html>
   );

@@ -37,3 +37,6 @@ interface ClientProps<T = any> {
   params: Usable<T>;
   searchParams: any;
 }
+
+declare module "jq-web";
+declare module "gofmt.js";

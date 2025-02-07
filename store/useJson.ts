@@ -1,19 +1,28 @@
 import { create } from "zustand";
-import defaultJson from "@/lib/defaultJson.json";
+import { useGraph } from "./useGraph";
 
 interface JsonActions {
-  setContent: (content: string) => void;
+  setJson: (json: string) => void;
+  getJson: () => string;
+  clear: () => void;
 }
 
 const initialStates = {
-  content: JSON.stringify(defaultJson, null, 2)
+  json: "",
+  loading: true
 };
 
-type initialStates = typeof initialStates;
+export type JsonStates = typeof initialStates;
 
-export const useJson = create<initialStates & JsonActions>(set => {
-  return {
-    ...initialStates,
-    setContent: content => set({ content })
-  };
-});
+export const useJson = create<JsonStates & JsonActions>()((set, get) => ({
+  ...initialStates,
+  getJson: () => get().json,
+  setJson: json => {
+    set({ json, loading: false });
+    useGraph.getState().setGraph(json);
+  },
+  clear: () => {
+    set({ json: "", loading: false });
+    useGraph.getState().clearGraph();
+  }
+}));
